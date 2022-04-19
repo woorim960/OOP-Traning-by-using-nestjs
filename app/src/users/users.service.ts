@@ -14,6 +14,7 @@ export class UsersService {
 
     await this.saveUser(name, email, password, signupVerifyToken);
     await this.sendMemberJoinEmail(email, signupVerifyToken);
+    console.log('Created User', name, email, password);
   }
 
   async verifyEmail(signupVerifyToken: string): Promise<string> {
