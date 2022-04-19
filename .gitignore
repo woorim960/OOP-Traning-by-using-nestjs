@@ -2,6 +2,9 @@
 .db.env
 data
 
+# environment
+.env
+
 # compiled output
 dist
 node_modules
