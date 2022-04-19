@@ -4,6 +4,7 @@ data
 
 # environment
 .env
+env
 
 # compiled output
 dist
