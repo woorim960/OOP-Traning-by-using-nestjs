@@ -4,6 +4,7 @@
 * <a href="#프로젝트">프로젝트</a>
   * <a href="#요구-사항">요구 사항</a>
   * <a href="#기타-설정">기타 설정</a>
+* <a href="#시작하기">시작하기</a>
 
 ## 프로젝트
 > 유저 서비스  
@@ -32,3 +33,38 @@
 * **CQRS(Command and Query Responsibility Segregation, 명령과 조회의 책임 분리):** 복잡한 소프트웨어를 만들다 보면 소스 코드가 스파게티처럼 얽히게 되는 경우가 생깁니다. 데이터베이스에 변형을 가하는 명령과 데이터 읽기 요청을 처리하는 조회 로직을 분리함으로써 성능, 확장성, 보안을 강화할 수 있습니다.
 * **클린 아키텍처:** 양파(Onion) 아키텍처, 육각형 아키텍처에서 발전한 클린 아키텍처는 SW의 계층을 분리하고 저수준의 계층이 고수준의 계층에 의존하도록 합니다. 의존의 방향이 바뀌는 경우가 있다면 DIP(Dependency Inversion Principle, 의존성 역전 법칙)를 활용하여 안정적인 소프트웨어를 작성할 수 있게 해 줍니다.
 * **유닛 테스트:** 소프트웨어에 변경이 생긴다면 반드시 테스트를 해야 합니다. 유닛 테스트는 유저의 입장에서 수행하는 테스트가 아닌 개발자가 테스트 코드를 이용하여 수행하는 최소 단위의 테스트 기법입니다. 내가 만든 코드 조각이 동작하는 조건을 기술하고, 주어진 입력에 대해 원하는 결과가 나오는 지 검사합니다.
+
+## 시작하기
+* **API 서버** : Nest.js  
+* **DB** : MariaDB  
+### 시작하기 전에
+> 개발환경 세팅을 위한 사전 준비.
+* [도커](https://docs.docker.com/get-docker/)와 [도커 컴포즈](https://docs.docker.com/compose/install/)를 설치합니다.
+   > **Mac**과 **Windows**는 **Docker Desktop**을 설치했다면 **Docker Compose**도 함께 설치되므로 별도 설치할 필요 없습니다.
+   1. 도커를 설치하려면 [여기](https://docs.docker.com/get-docker/)를 클릭해주세요.
+   2. 도커 컴포즈를 설치하려면 [여기](https://docs.docker.com/compose/install/)를 클릭해주세요.
+
+### 실행
+> 개발환경을 구축합니다.  
+> **API서버**와 **DB**를 명령어 하나로 손쉽게 구축할 수 있습니다.  
+
+1. 저장소를 복제합니다.
+   ```bash
+   # 저장소 복제
+   $ git clone https://github.com/modern-agile-team/OOP-Traning-by-using-nestjs
+
+   # 저장소로 이동
+   $ cd OOP-Traning-by-using-nestjs
+   ```
+2. docker-compose를 이용하여 jupyter 서버를 오픈합니다.
+   ```bash
+   $ docker-compose up
+   ```
+3. 오픈된 서버에 접속합니다.
+   > http://localhost:3000
+4. 이제 코드를 변경하는대로 반영되어 동작됩니다.
+
+### 종료
+  ```bash
+  $ docker-compose down
+  ```
