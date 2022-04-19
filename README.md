@@ -1,7 +1,14 @@
 # OOP-Traning-by-using-nestjs
+![nestjs-badge](https://img.shields.io/badge/Nestjs-orange)
+![mariadb-badge](https://img.shields.io/badge/MariaDB-green)
+![docker-compose-badge](https://img.shields.io/badge/Docker_Compose-red)
+![typescript-badge](https://img.shields.io/badge/TypeScript-blue)
+![typeorm-badge](https://img.shields.io/badge/TypeOrm-grey)
+![jest-badge](https://img.shields.io/badge/Jest-yellow)  
 객체지향프로그래밍을 훈련하기 위한 연습용 프로젝트
 
-* <a href="#프로젝트">프로젝트</a>
+## 목차
+* <a href="#프로젝트-소개">프로젝트 소개</a>
   * <a href="#요구-사항">요구 사항</a>
   * <a href="#기타-설정">기타 설정</a>
 * <a href="#시작하기">시작하기</a>
@@ -9,7 +16,7 @@
   * <a href="#실행">실행</a>  
   * <a href="#종료">종료</a>  
 
-## 프로젝트
+## 프로젝트 소개
 > 유저 서비스  
 
 모든 웹 애플리케이션의 필수 기능이라고 할 수 있는 유저 서비스를 개발.
