@@ -7,29 +7,30 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private userService: UsersService) {}
+  constructor(private usersService: UsersService) {}
 
   @Post()
   async createUser(@Body() dto: CreateUserDto): Promise<void> {
     const { name, email, password } = dto;
-    await this.userService.createUser(name, email, password);
+    await this.usersService.createUser(name, email, password);
   }
 
   @Post('/email-verify')
   async verifyEmail(@Query() dto: VerifyEmailDto): Promise<string> {
-    console.log(dto);
-    return;
+    const { signupVerifyToken } = dto;
+
+    return await this.usersService.verifyEmail(signupVerifyToken);
   }
 
   @Post('/login')
   async login(@Body() dto: UserLoginDto): Promise<string> {
-    console.log(dto);
-    return;
+    const { email, password } = dto;
+
+    return await this.usersService.login(email, password);
   }
 
   @Get('/:id')
   async getUserInfo(@Param('id') userId: string): Promise<UserInfo> {
-    console.log(userId);
-    return;
+    return await this.usersService.getUserInfo(userId);
   }
 }
