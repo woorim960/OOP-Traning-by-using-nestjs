@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  db:
+    image: mariadb:10
+    container_name: mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+      # - ./db/initdb.d:/docker-entrypoint-initdb.d
+    env_file: .db.env
+    environment:
+      TZ: Asia/Seoul
+    networks:
+      - backend
+    restart: always
+
+  nest-api:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: dockerfile.nest.dev
+    image: nest-api
+    container_name: nest-api
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app:/home/app
+    env_file: ./app/.env
+    networks:
+      - backend
+    command: ["npm", "run", "start:dev"]
+    restart: always
+
+networks:
+  backend:

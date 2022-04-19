@@ -1,0 +1,10 @@
+FROM node:14.5.0
+
+WORKDIR /home/app
+
+COPY ./app .
+
+RUN npm ci
+RUN npm i -g nest
+
+CMD ["npm", "run", "start:dev"]
