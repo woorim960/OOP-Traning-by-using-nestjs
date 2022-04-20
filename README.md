@@ -68,7 +68,7 @@
    ```
 2. docker-compose를 이용하여 jupyter 서버를 오픈합니다.
    ```bash
-   $ docker-compose up
+   $ docker-compose -f docker-compose.dev.yml up
    ```
 3. 오픈된 서버에 접속합니다.
    > http://localhost:3000
@@ -76,5 +76,5 @@
 
 ### 종료
   ```bash
-  $ docker-compose down
+  $ docker-compose -f docker-compose.dev.yml down
   ```
