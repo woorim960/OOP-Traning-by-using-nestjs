@@ -18,6 +18,15 @@
  * debug - 이 로거는 디버그 패키지를 사용하여 env 변수 DEBUG=typeorm:*을(를) 설정합니다. (참고로 로깅 옵션은 이 로거에 영향을 미치지 않습니다.)
  */
 
+/**
+ * Migrations NPM 명령
+ *
+ * npm run typeorm migration:generate -- -n CreateUserTable
+ * generate: 엔티티 파일들을 분석해서 자동으로 마이그레이션 파일을 만들어줍니다.
+ * -n: 마이그레이션 파일의 이름을 등록하기 위한 옵션
+ * CreateUserTable: 마이그레이션 파일의 이름
+ */
+
 module.exports = {
   type: 'mysql',
   host: process.env.DB_HOST,
