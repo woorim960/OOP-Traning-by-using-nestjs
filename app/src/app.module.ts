@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import emailConfig from './config/emailConfig';
 import { EnvValidationSchema } from './config/EnvValidationSchema';
 import { UsersModule } from './users/users.module';
@@ -13,6 +14,7 @@ import { UsersModule } from './users/users.module';
       isGlobal: true,
       validationSchema: EnvValidationSchema,
     }),
+    TypeOrmModule.forRoot(),
   ],
   controllers: [],
   providers: [],
