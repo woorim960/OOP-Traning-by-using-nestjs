@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import emailConfig from './config/emailConfig';
-import { EnvValidationSchema } from './config/EnvValidationSchema';
+import { envValidationSchema } from './config/env-validation-schema';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -12,7 +12,7 @@ import { UsersModule } from './users/users.module';
       envFilePath: [`${__dirname}/config/env/.${process.env.NODE_ENV}.env`],
       load: [emailConfig],
       isGlobal: true,
-      validationSchema: EnvValidationSchema,
+      validationSchema: envValidationSchema,
     }),
     TypeOrmModule.forRoot(),
   ],

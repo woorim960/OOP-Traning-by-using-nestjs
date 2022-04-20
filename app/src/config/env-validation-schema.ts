@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-export const EnvValidationSchema = Joi.object({
+export const envValidationSchema = Joi.object({
   EMAIL_SERVICE: Joi.string().required(),
   EMAIL_AUTH_USER: Joi.string().required(),
   EMAIL_AUTH_PASSWORD: Joi.string().required(),
