@@ -29,16 +29,16 @@
 
 module.exports = {
   type: 'mysql',
-  host: process.env.DB_HOST,
-  port: +process.env.DB_PORT,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host: process.env.DB_HOST || 'localhost',
+  port: +process.env.DB_PORT || 3306,
+  username: process.env.DB_USER || 'admin',
+  password: process.env.DB_PASSWORD || 'admin!',
+  database: process.env.DB_DATABASE || 'oop_traning',
   entities: [`dist/**/*.entity{.ts,.js}`],
   synchronize: false, // migrations의 원활한 동작을 위해 false로 설정 // Boolean(process.env.DB_SYNC),
   logger: 'advanced-console', // 로그 기록 방식
   logging: ['query'], // 어떤 것을 로그로 남길 것인지 ('all', ['error', 'info'] 등으로 세세하게 제어 가능)
-  migrations: ['dist/migrations/*{.ts,.js}'], // 마이그레이션을 수행할 파일
+  migrations: ['dist/src/migrations/*{.ts,.js}'], // 마이그레이션을 수행할 파일
   cli: {
     migrationsDir: 'src/migrations', // 마이그레이션 파일을 생성할 디렉토리.
   },
