@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import emailConfig from './config/emailConfig';
 import { envValidationSchema } from './config/env-validation-schema';
 import { LoggerMiddleware } from './logger/logger.middleware';
+import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -22,6 +23,6 @@ import { UsersModule } from './users/users.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
-    consumer.apply(LoggerMiddleware).forRoutes('/users');
+    consumer.apply(LoggerMiddleware).forRoutes(UsersController);
   }
 }
