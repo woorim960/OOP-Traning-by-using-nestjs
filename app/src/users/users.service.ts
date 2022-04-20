@@ -1,5 +1,5 @@
 import * as uuid from 'uuid';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { EmailService } from 'src/email/email.service';
 import { UserInfo } from './UserInfo';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,7 +16,10 @@ export class UsersService {
   ) {}
 
   async createUser(name: string, email: string, password: string) {
-    await this.checkUserExists(email);
+    const isExistedUser = await this.checkUserExists(email);
+    if (isExistedUser)
+      // 책에서는 UnprocessableEntityException 에러를 throw하여 422 에러코드를 응답하였음
+      throw new ConflictException('이미 존재하는 이메일입니다.'); // statusCode: 409
 
     const signupVerifyToken = uuid.v1();
 
@@ -48,8 +51,9 @@ export class UsersService {
     throw new Error('Method not implemented.');
   }
 
-  private checkUserExists(email: string) {
-    return false; // TODO: DB 연동 후 구현
+  private async checkUserExists(email: string): Promise<boolean> {
+    const user = await this.usersRepository.findOne({ email });
+    return !!user;
   }
 
   private async saveUser(
