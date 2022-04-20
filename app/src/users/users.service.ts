@@ -4,18 +4,21 @@ import { EmailService } from 'src/email/email.service';
 import { UserInfo } from './UserInfo';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { ulid } from 'ulid';
 
 @Injectable()
 export class UsersService {
   constructor(
-    private emailService: EmailService,
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
+    private readonly connection: Connection,
+    private emailService: EmailService,
   ) {}
 
   async createUser(name: string, email: string, password: string) {
+    const queryRunner = this.connection.createQueryRunner();
+
     const isExistedUser = await this.checkUserExists(email);
     if (isExistedUser)
       // 책에서는 UnprocessableEntityException 에러를 throw하여 422 에러코드를 응답하였음
@@ -23,7 +26,26 @@ export class UsersService {
 
     const signupVerifyToken = uuid.v1();
 
-    await this.saveUser(name, email, password, signupVerifyToken);
+    try {
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+      this.usersRepository = queryRunner.manager.getRepository(UserEntity);
+
+      await this.saveUser(name, email, password, signupVerifyToken);
+
+      // throw new Error('트랜잭션 정상 동작 확인을 위한 고의적인 에러 발생');
+
+      await queryRunner.commitTransaction();
+    } catch (e) {
+      // 에러가 발생하면 롤백
+      await queryRunner.rollbackTransaction();
+      throw new Error(
+        '회원가입 트랜잭션 수행 중 오류가 발생하여 롤백 되었습니다. 인증용 이메일은 전송되지 않습니다.',
+      );
+    } finally {
+      // 직접 생성한 QueryRunner는 해제시켜 주어야 함
+      await queryRunner.release();
+    }
     await this.sendMemberJoinEmail(email, signupVerifyToken);
     console.log('Created User', name, email, password);
   }
