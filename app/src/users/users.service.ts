@@ -35,9 +35,15 @@ export class UsersService {
     try {
       await queryRunner.connect();
       await queryRunner.startTransaction();
-      this.usersRepository = queryRunner.manager.getRepository(UserEntity);
 
-      await this.saveUser(name, email, password, signupVerifyToken);
+      const user = new UserEntity();
+      user.id = ulid();
+      user.name = name;
+      user.email = email;
+      user.password = password;
+      user.signupVerifyToken = signupVerifyToken;
+
+      await queryRunner.manager.getRepository(UserEntity).save(user);
 
       // throw new Error('트랜잭션 정상 동작 확인을 위한 고의적인 에러 발생');
 
@@ -71,11 +77,17 @@ export class UsersService {
   }
 
   async login(email: string, password: string): Promise<string> {
-    // TODO
-    // 1. email, password를 가진 유저가 존재하는지 DB에서 확인하고 없다면 에러 처리
-    // 2. JWT를 발급
+    const user = await this.usersRepository.findOne({ email, password });
 
-    throw new Error('Method not implemented.');
+    if (!user) {
+      throw new NotFoundException('유저가 존재하지 않습니다');
+    }
+
+    return this.authService.createJwt({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    });
   }
 
   async getUserInfo(userId: string): Promise<UserInfo> {
@@ -88,22 +100,6 @@ export class UsersService {
   private async checkUserExists(email: string): Promise<boolean> {
     const user = await this.usersRepository.findOne({ email });
     return !!user;
-  }
-
-  private async saveUser(
-    name: string,
-    email: string,
-    password: string,
-    signupVerifyToken: string,
-  ) {
-    const user = new UserEntity();
-    user.id = ulid();
-    user.name = name;
-    user.email = email;
-    user.password = password;
-    user.signupVerifyToken = signupVerifyToken;
-
-    await this.usersRepository.save(user);
   }
 
   private async sendMemberJoinEmail(email: string, signupVerifyToken: string) {
