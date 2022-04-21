@@ -4,18 +4,18 @@ import { AppModule } from './app.module';
 import { logger2 } from './logger/logger2.middleware';
 
 async function bootstrap() {
-  const { use, useGlobalPipes, listen } = await NestFactory.create(AppModule); // app
+  const app = await NestFactory.create(AppModule);
   // middlewares
-  use(logger2);
+  app.use(logger2);
 
   // pipes
-  useGlobalPipes(
+  app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
     }),
   );
 
   // Open server
-  await listen(3000);
+  await app.listen(3000);
 }
 bootstrap();
