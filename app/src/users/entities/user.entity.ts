@@ -16,4 +16,11 @@ export class UserEntity {
 
   @Column({ length: 60 })
   signupVerifyToken: string;
+
+  @Column({
+    type: 'tinyint',
+    precision: 1, // tinyint(1)로 만듦.
+    default: 0,
+  })
+  isRegistered: number;
 }
