@@ -1,24 +1,23 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import authConfig from './config/authConfig';
 import emailConfig from './config/emailConfig';
 import { envValidationSchema } from './config/env-validation-schema';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    UsersModule,
     ConfigModule.forRoot({
       envFilePath: [`${__dirname}/config/env/.${process.env.NODE_ENV}.env`],
-      load: [emailConfig],
+      load: [emailConfig, authConfig],
       isGlobal: true,
       validationSchema: envValidationSchema,
     }),
     TypeOrmModule.forRoot(),
-    AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
