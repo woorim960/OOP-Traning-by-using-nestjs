@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Connection, Repository } from 'typeorm';
 import { ulid } from 'ulid';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class UsersService {
@@ -18,6 +19,7 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
     private readonly connection: Connection,
     private emailService: EmailService,
+    private authService: AuthService,
   ) {}
 
   async createUser(name: string, email: string, password: string) {
