@@ -6,6 +6,7 @@ import { envValidationSchema } from './config/env-validation-schema';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UsersModule } from './users/users.module';
       validationSchema: envValidationSchema,
     }),
     TypeOrmModule.forRoot(),
+    AuthModule,
   ],
   controllers: [],
   providers: [],
