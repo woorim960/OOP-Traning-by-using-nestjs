@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  Headers,
+} from '@nestjs/common';
+import { AuthService } from 'src/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserLoginDto } from './dto/user-login.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
@@ -7,7 +16,10 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
   @Post()
   async createUser(@Body() dto: CreateUserDto): Promise<void> {
@@ -30,7 +42,16 @@ export class UsersController {
   }
 
   @Get('/:id')
-  async getUserInfo(@Param('id') userId: string): Promise<UserInfo> {
-    return await this.usersService.getUserInfo(userId);
+  async getUserInfo(
+    @Headers() headers: any,
+    @Param('id') userId: string,
+  ): Promise<UserInfo> {
+    // Authorization 헤더 값의 JWT 부분만 가져오기 위해 'Bearer '를 잘라낸다.
+    const jwtString = headers.authorization.split('Bearer ')[1];
+
+    // JWT가 올바른지 검증하고, 잘못됐다면 에러 발생 후 Unauthrized 401 상태코드 응답
+    this.authService.verify(jwtString);
+
+    return this.usersService.getUserInfo(userId);
   }
 }
