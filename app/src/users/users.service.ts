@@ -1,5 +1,6 @@
 import * as uuid from 'uuid';
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -63,10 +64,36 @@ export class UsersService {
   }
 
   async verifyEmail(signupVerifyToken: string): Promise<string> {
+    const queryRunner = this.connection.createQueryRunner();
     const user = await this.usersRepository.findOne({ signupVerifyToken });
 
     if (!user) {
       throw new NotFoundException('유저가 존재하지 않습니다');
+    }
+
+    if (user.isRegistered)
+      throw new BadRequestException('이미 회원가입된 사용자입니다.');
+
+    try {
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+
+      user.isRegistered = 1;
+
+      await queryRunner.manager.getRepository(UserEntity).save(user);
+
+      // throw new Error('트랜잭션 정상 동작 확인을 위한 고의적인 에러 발생');
+
+      await queryRunner.commitTransaction();
+    } catch (e) {
+      // 에러가 발생하면 롤백
+      await queryRunner.rollbackTransaction();
+      throw new Error(
+        'isRegistered를 1로 업데이트하는 트랜잭션 수행 중 오류가 발생하여 롤백 되었습니다. 인증용 이메일은 전송되지 않습니다.',
+      );
+    } finally {
+      // 직접 생성한 QueryRunner는 해제시켜 주어야 함
+      await queryRunner.release();
     }
 
     return this.authService.createJwt({
@@ -79,9 +106,7 @@ export class UsersService {
   async login(email: string, password: string): Promise<string> {
     const user = await this.usersRepository.findOne({ email, password });
 
-    if (!user) {
-      throw new NotFoundException('유저가 존재하지 않습니다');
-    }
+    if (!user) throw new NotFoundException('유저가 존재하지 않습니다');
 
     return this.authService.createJwt({
       id: user.id,
