@@ -15,7 +15,7 @@ export class AuthService {
     @Inject(authConfig.KEY) private config: ConfigType<typeof authConfig>,
   ) {}
 
-  login(user: User) {
+  createJwt(user: User) {
     const payload = { ...user };
 
     return jwt.sign(payload, this.config.jwtSecret, {
