@@ -6,7 +6,9 @@ import {
   Param,
   Query,
   Headers,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/auth.guard';
 import { AuthService } from 'src/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserLoginDto } from './dto/user-login.dto';
@@ -41,17 +43,12 @@ export class UsersController {
     return await this.usersService.login(email, password);
   }
 
-  @Get('/:id')
+  @UseGuards(AuthGuard)
+  @Get(':id')
   async getUserInfo(
     @Headers() headers: any,
     @Param('id') userId: string,
   ): Promise<UserInfo> {
-    // Authorization 헤더 값의 JWT 부분만 가져오기 위해 'Bearer '를 잘라낸다.
-    const jwtString = headers.authorization.split('Bearer ')[1];
-
-    // JWT가 올바른지 검증하고, 잘못됐다면 에러 발생 후 Unauthrized 401 상태코드 응답
-    this.authService.verify(jwtString);
-
     return this.usersService.getUserInfo(userId);
   }
 }
