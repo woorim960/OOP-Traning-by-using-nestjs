@@ -61,7 +61,7 @@
 1. 저장소를 복제합니다.
    ```bash
    # 저장소 복제
-   $ git clone https://github.com/modern-agile-team/OOP-Traning-by-using-nestjs
+   $ git clone https://github.com/woorim960/OOP-Traning-by-using-nestjs
 
    # 저장소로 이동
    $ cd OOP-Traning-by-using-nestjs
@@ -71,7 +71,7 @@
    $ docker-compose -f docker-compose.dev.yml up
    ```
 3. 오픈된 서버에 접속합니다.
-   > http://localhost:3000
+   > http://localhost:3000/...
 4. 이제 코드를 변경하는대로 반영되어 동작됩니다.
 
 ### 종료
