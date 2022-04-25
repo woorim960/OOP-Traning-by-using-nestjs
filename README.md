@@ -66,7 +66,7 @@
    # 저장소로 이동
    $ cd OOP-Traning-by-using-nestjs
    ```
-2. docker-compose를 이용하여 jupyter 서버를 오픈합니다.
+2. docker-compose를 이용하여 ```API``` & ```DB``` 서버를 오픈합니다.
    ```bash
    $ docker-compose -f docker-compose.dev.yml up
    ```
