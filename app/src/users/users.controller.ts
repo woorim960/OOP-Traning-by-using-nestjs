@@ -16,7 +16,7 @@ import { VerifyEmailDto } from './dto/verify-email.dto';
 import { UserInfo } from './UserInfo';
 import { UsersService } from './users.service';
 
-@Controller('users')
+@Controller('/users')
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -43,7 +43,7 @@ export class UsersController {
     return await this.usersService.login(email, password);
   }
 
-  @Get(':id')
+  @Get('/:id')
   @UseGuards(AuthGuard)
   async getUserInfo(
     @Headers() headers: any,
