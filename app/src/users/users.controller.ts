@@ -43,8 +43,8 @@ export class UsersController {
     return await this.usersService.login(email, password);
   }
 
-  @UseGuards(AuthGuard)
   @Get(':id')
+  @UseGuards(AuthGuard)
   async getUserInfo(
     @Headers() headers: any,
     @Param('id') userId: string,
