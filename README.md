@@ -45,8 +45,8 @@
 * **유닛 테스트:** 소프트웨어에 변경이 생긴다면 반드시 테스트를 해야 합니다. 유닛 테스트는 유저의 입장에서 수행하는 테스트가 아닌 개발자가 테스트 코드를 이용하여 수행하는 최소 단위의 테스트 기법입니다. 내가 만든 코드 조각이 동작하는 조건을 기술하고, 주어진 입력에 대해 원하는 결과가 나오는 지 검사합니다.
 
 ## 시작하기
-* **API 서버** : Nest.js  
-* **DB** : MariaDB  
+* **API 서버** : Nest.js v8.2.4
+* **DB** : MariaDB v10.7.3
 ### 시작하기 전에
 > 개발환경 세팅을 위한 사전 준비.
 * [도커](https://docs.docker.com/get-docker/)와 [도커 컴포즈](https://docs.docker.com/compose/install/)를 설치합니다.
@@ -61,17 +61,17 @@
 1. 저장소를 복제합니다.
    ```bash
    # 저장소 복제
-   $ git clone https://github.com/modern-agile-team/OOP-Traning-by-using-nestjs
+   $ git clone https://github.com/woorim960/OOP-Traning-by-using-nestjs
 
    # 저장소로 이동
    $ cd OOP-Traning-by-using-nestjs
    ```
-2. docker-compose를 이용하여 jupyter 서버를 오픈합니다.
+2. docker-compose를 이용하여 ```API``` & ```DB``` 서버를 오픈합니다.
    ```bash
    $ docker-compose -f docker-compose.dev.yml up
    ```
 3. 오픈된 서버에 접속합니다.
-   > http://localhost:3000
+   > http://localhost:3000/...
 4. 이제 코드를 변경하는대로 반영되어 동작됩니다.
 
 ### 종료
