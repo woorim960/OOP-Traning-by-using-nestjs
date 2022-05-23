@@ -14,7 +14,10 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { UserInfo } from './UserInfo';
 import { UsersService } from './users.service';
+import { Roles } from 'src/common/decorators/metadatas/roles.decorator';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
+// @Roles('user')
 @Controller('/users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
@@ -40,7 +43,10 @@ export class UsersController {
   }
 
   @Get('/:id')
-  @UseGuards(AuthenticationGuard)
+  // @UseGuards(RolesGuard) // 인가
+  @UseGuards(AuthenticationGuard) // 인증
+  // @Roles('admin') // Roles 메타데이터 등록 -> 해당 코드로 인해 getUserInfo 메서드는 admin만 이용가능하도록 설정됐다.
+  // 메서드의 실행 순서는 반대이므로 AuthenticationGuard가 RolesGuard보다 먼저 수행된다.
   async getUserInfo(
     // @User() user: any,
     @Param('id') userId: string,
