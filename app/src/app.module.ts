@@ -20,7 +20,13 @@ import { UsersModule } from './users/users.module';
     UsersModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    // 아래 RolesGuard는 app.module 안의 기능이 수행되는 모든 순간에 실행할 것이 아니고, 원하는 곳에서 @UseGaurds()로 사용하기 위해 주석 처리 하였다.
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
