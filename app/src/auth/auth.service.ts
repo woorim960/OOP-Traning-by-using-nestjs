@@ -36,7 +36,7 @@ export class AuthService {
       const { id, email } = payload;
 
       return {
-        userId: id,
+        id,
         email,
       };
     } catch (e) {
