@@ -7,7 +7,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { AuthenticationGuard } from 'src/auth.guard';
+import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { User } from 'src/common/decorators/args/user.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserLoginDto } from './dto/user-login.dto';
