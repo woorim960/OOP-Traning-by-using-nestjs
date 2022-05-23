@@ -11,7 +11,8 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    return this.validateRequest(request);
+    request.user = this.validateRequest(request);
+    return true;
   }
 
   private validateRequest(request: Request) {
@@ -19,8 +20,8 @@ export class AuthGuard implements CanActivate {
     const jwtString = request.headers.authorization.split('Bearer ')[1];
 
     // JWT가 올바른지 검증하고, 잘못됐다면 에러 발생 후 Unauthrized 401 상태코드 응답
-    this.authService.verify(jwtString);
+    const user = this.authService.verify(jwtString);
 
-    return true;
+    return user;
   }
 }
