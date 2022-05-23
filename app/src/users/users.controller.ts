@@ -18,10 +18,7 @@ import { UsersService } from './users.service';
 
 @Controller('/users')
 export class UsersController {
-  constructor(
-    private usersService: UsersService,
-    private authService: AuthService,
-  ) {}
+  constructor(private usersService: UsersService) {}
 
   @Post('/sign-up')
   async createUser(@Body() dto: CreateUserDto): Promise<void> {
