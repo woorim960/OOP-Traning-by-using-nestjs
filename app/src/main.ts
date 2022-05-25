@@ -13,7 +13,7 @@ async function bootstrap() {
     logger: WinstonModule.createLogger({
       transports: [
         new winston.transports.Console({
-          level: process.env.NODE_ENV === 'production' ? 'info' : 'silly',
+          level: process.env.NODE_ENV === 'production' ? 'info' : 'silly', // 프로덕션 환경이면 info레벨까지 로깅, 아니면 모두 로깅
           format: winston.format.combine(
             winston.format.timestamp(),
             nestWinstonModuleUtilities.format.nestLike('OOP_TRANING', {
