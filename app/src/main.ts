@@ -16,7 +16,7 @@ async function bootstrap() {
           level: process.env.NODE_ENV === 'production' ? 'info' : 'silly', // 프로덕션 환경이면 info레벨까지 로깅, 아니면 모두 로깅
           format: winston.format.combine(
             winston.format.timestamp(),
-            nestWinstonModuleUtilities.format.nestLike('OOP_TRANING', {
+            nestWinstonModuleUtilities.format.nestLike('OOP_TRANING', { // 'OOP_TRANING'은 모든 로그에 기록되며, 보통 서비스명을 넣는다.
               prettyPrint: true,
             }),
           ),
